@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/mmmy/research_block/issues"
   },
-  "homepage": "https://github.com/mmmy/research_block#readme"
+  "homepage": "https://github.com/mmmy/research_block#readme",
+  "dependencies": {
+    "blockchain.info": "^2.12.1"
+  }
 }
