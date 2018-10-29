@@ -42,7 +42,7 @@ if (fs.existsSync(filePath)) {
       const splits = last.split(',')
       const timestamp = splits[1]
       lastHeight = splits[0]
-      lastTimestamp = timestamp * 1000
+      lastTimestamp = timestamp * 1000 + 24 * 3600 * 1000// 往后24小时
       console.log('height => ', lastHeight, 'lastTimestamp => ', lastTimestamp)
     }
   }
@@ -60,7 +60,6 @@ async function run() {
       console.log('remain is 0, finished')
       break
     }
-    lastTimestamp = lastTimestamp + 24 * 3600 * 1000// 往后24小时
     let requestTime = lastTimestamp
     try {
       const res = await blockexplorer.getBlocks(requestTime)
@@ -75,6 +74,7 @@ async function run() {
           process.exit(1)
         }
         lastHeight = list[list.length - 1].height
+        lastTimestamp = lastTimestamp + 24 * 3600 * 1000// 往后24小时
         saveToFile(list)
       }
 
