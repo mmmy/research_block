@@ -9,6 +9,22 @@ const JSONtoCSV = (arr, columns, delimiter = ',') =>
     )
   ].join('\n');
 
+
+const integerToBaseN = (x, baseSymbols) => {
+  const m = baseSymbols.length
+  const results = []
+  while (x > 0) {
+    const mod = x % m
+    x -= mod
+    x /= m
+    results.push(baseSymbols[mod])
+  }
+  return results.reverse().join('')
+}
+
+console.log(integerToBaseN(0x100, '0123456789abcdefghijklmnopqrstuvw'))
+
 module.exports = {
-  JSONtoCSV
+  JSONtoCSV,
+  integerToBaseN
 }
