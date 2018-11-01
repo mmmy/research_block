@@ -3,13 +3,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import hashlib
-
-file = './data/blocks.csv'
-
-blocks = pd.read_csv(file, header=None, names=['height', 'time', 'hash', 'main_chain'])
+from blocks import blocks
 
 hash_list = blocks.hash
-hash_list = [hashlib.sha256(h.encode('utf-8')).hexdigest() for h in hash_list]
+hash_list = [hashlib.sha512(h.encode('utf-8')).hexdigest() for h in hash_list]
 
 codes = [list(h) for h in hash_list]
 
@@ -21,7 +18,7 @@ fig, axes = plt.subplots(4, 16)
 
 axes = axes.ravel()
 for i in range(len(axes)):
-  hist = codes_hist[i]
+  hist = codes_hist[i + 64]
   ax = axes[i]
   ax.bar(hist.index, hist.values)
   ax.set_title(i)
