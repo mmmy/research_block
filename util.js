@@ -60,8 +60,37 @@ const permutationFromInteger = (x, baseSymbols, uniq, count) => {
 
 // console.log(integerToBaseN('8d98fb67850b4fd740330f2e5067595962c61ac86a3358ba5a4de55e66ff5704', '0123456789abcdefghijklmnopqrstuvw'))
 
+// rules = [{symbols, unique, count}]
+const integerToSeries = (x, rules) => {
+  const results = []
+  for (let i = 0; i < rules.length; i++) {
+    const rule = rules[i]
+    const data = permutationFromInteger(x, rule.symbols, rule.unique, rule.count)
+    results.push({
+      symbol: data.results,
+      index: data.results.map(s => rule.symbols.indexOf(s))
+    })
+    x = data.restX
+  }
+  return results
+}
+// 双色球
+let rules = [
+  {
+    symbols: '0123456789abcdef',
+    unique: true,
+    count: 1
+  }, {
+    symbols: '0123456789abcdefghijklmnopqrstuvw',
+    unique: true,
+    count: 6
+  }
+]
+// console.log(integerToSeries('76a914641ad5051edd97029a003fe9efb29359fcee409d88ac', rules))
+
 module.exports = {
   JSONtoCSV,
   integerToBaseN,
   permutationFromInteger,
+  integerToSeries,
 }
