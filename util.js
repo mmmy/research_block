@@ -1,3 +1,5 @@
+var bigInt = require("big-integer")
+
 const JSONtoCSV = (arr, columns, delimiter = ',') =>
   [
     // columns.join(delimiter),
@@ -13,18 +15,53 @@ const JSONtoCSV = (arr, columns, delimiter = ',') =>
 const integerToBaseN = (x, baseSymbols) => {
   const m = baseSymbols.length
   const results = []
-  while (x > 0) {
-    const mod = x % m
-    x -= mod
-    x /= m
+  let number = bigInt(x, 16)
+
+  while (number.compare(0) > 0) {
+    const mod = number.mod(m)                   // number % m
+    number = number.subtract(mod)       // number -= mode                    
+    number = number.divide(m)           // number /= m
     results.push(baseSymbols[mod])
   }
-  return results.reverse().join('')
+  return results
 }
 
-console.log(integerToBaseN(0x100, '0123456789abcdefghijklmnopqrstuvw'))
+const permutationFromInteger = (x, baseSymbols, uniq, count) => {
+  const results = []
+  let bs = baseSymbols.concat()          // copy
+  if (typeof bs == 'string') {
+    bs = bs.split('')
+  }
+  let number = bigInt(x, 16)
+
+  while (number.compare(0) > 0) {
+    const m = bs.length
+    if (m == 0) {
+      break
+    }
+    const mod = number.mod(m)                   // number % m
+    const symbol = bs[mod]
+    number = number.subtract(mod)       // number -= mode                    
+    number = number.divide(m)          // number /= m
+    results.push(symbol)
+    if (count > 0 && results.length >= count) {
+      break
+    }
+    if (uniq) {
+      bs.splice(mod, 1)                   //delete
+    }
+  }
+
+  return {
+    restX: number.toString(16),
+    results
+  }
+}
+
+// console.log(integerToBaseN('8d98fb67850b4fd740330f2e5067595962c61ac86a3358ba5a4de55e66ff5704', '0123456789abcdefghijklmnopqrstuvw'))
 
 module.exports = {
   JSONtoCSV,
-  integerToBaseN
+  integerToBaseN,
+  permutationFromInteger,
 }
