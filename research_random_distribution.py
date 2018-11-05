@@ -7,7 +7,7 @@ symbols = '0123456789abcdef'
 def random_symbol():
   return symbols[int(np.floor(np.random.random() * 16))]
 
-sample = [random_symbol() for i in range(int(5e5))]
+sample = [random_symbol() for i in range(548501)]
 
 sample_hist = pd.Series(sample).value_counts().sort_index(axis=0)
 
