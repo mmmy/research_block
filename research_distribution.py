@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 import hashlib
 import sys
 from blocks import blocks
+from scipy.stats import kstest
+import scipy.stats as stats
 
+symbols='0123456789abcdef'
 show_graph = '--graph' in sys.argv
 
 hash_list = blocks.hash
@@ -14,11 +17,17 @@ hash_list = [hashlib.sha256(h.encode('utf-8')).hexdigest() for h in hash_list]
 codes = [list(h) for h in hash_list]
 
 codes_pd = pd.DataFrame(codes)
+codes0 = [symbols.find(x) for x in codes_pd[0].values]
+# print(codes0)
+print(stats.chisquare(codes0))
 
 codes_hist = [pd.Series(codes_pd[c]).value_counts().sort_index(axis=0) for c in codes_pd.columns]
 codes_hist_pd = pd.DataFrame(codes_hist)
-codes_hist_pd.to_csv('./temp/codes_hist.csv')
-print(codes_hist_pd)
+# codes_hist_pd.index.append('pvalue')
+# result = codes_hist_pd.apply(lambda x: kstest(x, 'norm'), axis=1)
+# print(result)
+# codes_hist_pd.to_csv('./temp/codes_hist.csv')
+# print(codes_hist_pd)
 
 if show_graph:
   fig, axes = plt.subplots(4, 16)
