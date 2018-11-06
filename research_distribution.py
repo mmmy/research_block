@@ -21,14 +21,18 @@ codes0 = [symbols.find(x) + 1 for x in codes_pd[0].values]
 # print(codes0)
 print(np.min(codes0))
 print(np.max(codes0))
-print(stats.chi2_contingency(codes0))
+# print(stats.chi2_contingency(codes0))
 # print(kstest(codes0, stats.randint.cdf, args=(0, 16)))
 
 codes_hist = [pd.Series(codes_pd[c]).value_counts().sort_index(axis=0) for c in codes_pd.columns]
 codes_hist_pd = pd.DataFrame(codes_hist)
 # codes_hist_pd.index.append('pvalue')
-# result = codes_hist_pd.apply(lambda x: kstest(x, 'norm'), axis=1)
-# print(result)
+result = codes_hist_pd.apply(lambda x:stats.chi2_contingency([x, [34281]*16]), axis=1)
+vs = codes_hist_pd.iloc[0].values
+# print(vs)
+# print(stats.chisquare(vs, ddof=15))
+# print(stats.chi2_contingency([vs, [34281] * 16]))
+print(result)
 # codes_hist_pd.to_csv('./temp/codes_hist.csv')
 # print(codes_hist_pd)
 
