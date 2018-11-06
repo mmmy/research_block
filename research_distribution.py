@@ -14,7 +14,7 @@ show_graph = '--graph' in sys.argv
 def hash_n(str, times=1):
   result = str
   while times > 0:
-    result = hashlib.sha512(result.encode('utf-8')).hexdigest()
+    result = hashlib.sha256(result.encode('utf-8')).hexdigest()
     times-=1
   return result
 
@@ -33,6 +33,8 @@ print(np.max(codes0))
 
 codes_hist = [pd.Series(codes_pd[c]).value_counts().sort_index(axis=0) for c in codes_pd.columns]
 codes_hist_pd = pd.DataFrame(codes_hist)
+codes_hist_sum = codes_hist_pd.apply(np.sum)
+print(stats.chi2_contingency([codes_hist_sum.values, [2189952]*16]))
 # codes_hist_pd.index.append('pvalue')
 result = codes_hist_pd.apply(lambda x:stats.chi2_contingency([x, [34281]*16]), axis=1)
 vs = codes_hist_pd.iloc[0].values
