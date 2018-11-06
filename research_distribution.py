@@ -17,9 +17,12 @@ hash_list = [hashlib.sha256(h.encode('utf-8')).hexdigest() for h in hash_list]
 codes = [list(h) for h in hash_list]
 
 codes_pd = pd.DataFrame(codes)
-codes0 = [symbols.find(x) for x in codes_pd[0].values]
+codes0 = [symbols.find(x) + 1 for x in codes_pd[0].values]
 # print(codes0)
-print(stats.chisquare(codes0))
+print(np.min(codes0))
+print(np.max(codes0))
+print(stats.chi2_contingency(codes0))
+# print(kstest(codes0, stats.randint.cdf, args=(0, 16)))
 
 codes_hist = [pd.Series(codes_pd[c]).value_counts().sort_index(axis=0) for c in codes_pd.columns]
 codes_hist_pd = pd.DataFrame(codes_hist)
