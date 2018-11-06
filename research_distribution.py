@@ -11,8 +11,15 @@ import scipy.stats as stats
 symbols='0123456789abcdef'
 show_graph = '--graph' in sys.argv
 
+def hash_n(str, times=1):
+  result = str
+  while times > 0:
+    result = hashlib.sha512(result.encode('utf-8')).hexdigest()
+    times-=1
+  return result
+
 hash_list = blocks.hash
-hash_list = [hashlib.sha256(h.encode('utf-8')).hexdigest() for h in hash_list]
+hash_list = [hash_n(h, 1) for h in hash_list]
 
 codes = [list(h) for h in hash_list]
 

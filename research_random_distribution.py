@@ -2,14 +2,20 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import scipy.stats as stats
 
 symbols = '0123456789abcdef'
 def random_symbol():
-  return symbols[int(np.floor(np.random.random() * 16))]
+  return symbols[np.random.randint(0,16)]
 
-sample = [random_symbol() for i in range(548501)]
+def sample():
+  return [random_symbol() for i in range(548496)]
 
-sample_hist = pd.Series(sample).value_counts().sort_index(axis=0)
+sample_hist = [pd.Series(sample()).value_counts().sort_index(axis=0) for i in range(64)]
+codes_hist_pd = pd.DataFrame(sample_hist)
 
-plt.bar(sample_hist.index, sample_hist.values)
-plt.show()
+result = codes_hist_pd.apply(lambda x:stats.chi2_contingency([x, [34281]*16]), axis=1)
+print(result)
+
+# plt.bar(sample_hist.index, sample_hist.values)
+# plt.show()
