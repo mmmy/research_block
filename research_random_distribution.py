@@ -17,7 +17,20 @@ codes_hist_sum = codes_hist_pd.apply(np.sum)
 print(stats.chi2_contingency([codes_hist_sum.values, [2189952]*16]))
 
 result = codes_hist_pd.apply(lambda x:stats.chi2_contingency([x, [34281]*16]), axis=1)
+# result = codes_hist_pd.apply(lambda x:stats.chisquare(x), axis=1)
 print(result)
+
+mean = codes_hist_pd.mean(axis=1)
+std = codes_hist_pd.std(axis=1)
+chi2 = [s[0] for s in result]
+pvalue = [s[1] for s in result]
+
+codes_hist_pd['mean'] = mean
+codes_hist_pd['std'] = std
+# print(chi2)
+codes_hist_pd['chi2'] = chi2
+codes_hist_pd['pvalue'] = pvalue
+codes_hist_pd.to_csv('./temp/random_codes_hist1.csv')
 
 # plt.bar(sample_hist.index, sample_hist.values)
 # plt.show()
