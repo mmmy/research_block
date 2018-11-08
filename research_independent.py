@@ -9,6 +9,8 @@ from scipy.stats import kstest
 import scipy.stats as stats
 from util import hash_n
 import itertools
+from util import  create_hist_pd, stats_data
+import os.path
 
 hash_list = blocks.hash
 hash_list = [hash_n(h, 1) for h in hash_list]
@@ -25,31 +27,46 @@ codes_hist_pd = pd.DataFrame(codes_hist)
 
 # union hist
 
-def union_code(h):
+def union_code(h, start=0, count=50):
   codes = list(h)
   l = len(codes)
   pro = [x[0]+x[1] for x in itertools.product(codes, codes)]
   for i in range(l - 1, -1, -1): 
     del pro[i * (l + 1)]
-  return pro[0:30]
+  return pro[start : (start + count)]
 
-codes_product = [union_code(h) for h in hash_list]
-codes_product_pd = pd.DataFrame(codes_product)
-codes_product_hist = [pd.Series(codes_product_pd[c]).value_counts().sort_index(axis=0) for c in codes_product_pd.columns]
-codes_product_hist_pd = pd.DataFrame(codes_product_hist)
 
-result = codes_product_hist_pd.apply(lambda x:stats.chi2_contingency([x, [2142.5625]*256]), axis=1)
+def get_hist_pd_stats(start, count):
+  codes_product = [union_code(h, start, count) for h in hash_list]
+  if len(codes_product) == 0:
+    return None
+  codes_product_hist, codes_product_hist_pd = create_hist_pd(codes_product)
+  return stats_data(codes_product_hist_pd)
+
+file_path = './temp/codes_product_hist_pd3.csv'
+
+try:
+  codes_product_hist_pd = pd.read_csv(file_path)
+  start = codes_product_hist_pd.shape[0]
+except:
+  codes_product_hist_pd = None
+  start = 0
+
+count = 50
+
+while True:
+  print('start at', start)
+  stats_pd = get_hist_pd_stats(start, count)
+  if stats_pd is None:
+    print('finish')
+    break
+  if codes_product_hist_pd is not None:
+    codes_product_hist_pd = codes_product_hist_pd.append(stats_pd, sort=False, ignore_index=True)
+  else:
+    codes_product_hist_pd = stats_pd
+  codes_product_hist_pd.to_csv(file_path)
+  start = start + count
+
+# result = codes_product_hist_pd.apply(lambda x:stats.chi2_contingency([x, [2142.5625]*256]), axis=1)
 # result = codes_product_hist_pd.apply(lambda x:stats.chisquare(x), axis=1)
-mean = codes_product_hist_pd.mean(axis=1)
-std = codes_product_hist_pd.std(axis=1)
-chi2 = [s[0] for s in result]
-pvalue = [s[1] for s in result]
-
-codes_product_hist_pd['mean'] = mean
-codes_product_hist_pd['std'] = std
-# print(chi2)
-codes_product_hist_pd['chi2'] = chi2
-codes_product_hist_pd['pvalue'] = pvalue
-
-codes_product_hist_pd.to_csv('./temp/codes_product_hist_pd1.csv')
 # print(codes_product)
