@@ -31,7 +31,7 @@ def union_code(h):
   pro = [x[0]+x[1] for x in itertools.product(codes, codes)]
   for i in range(l - 1, -1, -1): 
     del pro[i * (l + 1)]
-  return pro[0:3]
+  return pro[0:30]
 
 codes_product = [union_code(h) for h in hash_list]
 codes_product_pd = pd.DataFrame(codes_product)
@@ -39,6 +39,7 @@ codes_product_hist = [pd.Series(codes_product_pd[c]).value_counts().sort_index(a
 codes_product_hist_pd = pd.DataFrame(codes_product_hist)
 
 result = codes_product_hist_pd.apply(lambda x:stats.chi2_contingency([x, [2142.5625]*256]), axis=1)
+# result = codes_product_hist_pd.apply(lambda x:stats.chisquare(x), axis=1)
 mean = codes_product_hist_pd.mean(axis=1)
 std = codes_product_hist_pd.std(axis=1)
 chi2 = [s[0] for s in result]
@@ -50,5 +51,5 @@ codes_product_hist_pd['std'] = std
 codes_product_hist_pd['chi2'] = chi2
 codes_product_hist_pd['pvalue'] = pvalue
 
-codes_product_hist_pd.to_csv('./temp/codes_product_hist_pd.csv')
+codes_product_hist_pd.to_csv('./temp/codes_product_hist_pd1.csv')
 # print(codes_product)
