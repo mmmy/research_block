@@ -38,7 +38,7 @@ def union_code(h, start=0, count=50):
 
 def get_hist_pd_stats(start, count):
   codes_product = [union_code(h, start, count) for h in hash_list]
-  if len(codes_product) == 0:
+  if len(codes_product[0]) == 0:
     return None
   codes_product_hist, codes_product_hist_pd = create_hist_pd(codes_product)
   return stats_data(codes_product_hist_pd)
