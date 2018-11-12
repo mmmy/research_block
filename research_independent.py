@@ -46,7 +46,7 @@ def get_hist_pd_stats(start, count):
 file_path = './temp/codes_product_hist_pd3.csv'
 
 try:
-  codes_product_hist_pd = pd.read_csv(file_path)
+  codes_product_hist_pd = pd.read_csv(file_path, index_col=0)
   start = codes_product_hist_pd.shape[0]
 except:
   codes_product_hist_pd = None
