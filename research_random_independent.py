@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import hashlib
 import sys
-from blocks_random import blocks
+from uniform_random_blocks import blocks
 from scipy.stats import kstest
 import scipy.stats as stats
 from util import hash_n
