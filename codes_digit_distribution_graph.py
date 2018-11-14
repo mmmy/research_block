@@ -1,7 +1,7 @@
 #python 3.6
 '''
 将research_btc_blocks_hash_distribution_digit.py 与 research_uniform_random_hash_distribution_digit.py
-生成的结果csv生成直观的柱形图，
+生成的结果csv中0123456789abcdef的分布生成直观的柱形图，
 由于sha256有64位，所以这里每一个结果都有64个柱形图，
 为了尽可能的显示在一张A4纸上，我们每一页显示16个
 '''
