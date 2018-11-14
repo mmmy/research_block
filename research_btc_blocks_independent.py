@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import hashlib
 import sys
-from uniform_random_blocks import blocks
+from btc_blocks import blocks
 from scipy.stats import kstest
 import scipy.stats as stats
 from util import hash_n
@@ -43,7 +43,7 @@ def get_hist_pd_stats(start, count):
   codes_product_hist, codes_product_hist_pd = create_hist_pd(codes_product)
   return stats_data(codes_product_hist_pd)
 
-file_path = './temp/random_codes_product_hist_pd.csv'
+file_path = './temp/btc_548496_blocks_hash_sha256_codes_product_hist_pd.csv'
 
 try:
   codes_product_hist_pd = pd.read_csv(file_path, index_col=0)
@@ -52,7 +52,7 @@ except:
   codes_product_hist_pd = None
   start = 0
 
-count = 100
+count = 50
 
 while True:
   print('start at', start)

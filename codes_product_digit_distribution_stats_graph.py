@@ -1,6 +1,7 @@
 #python 3.6
 '''
-将research_btc_blocks_hash_distribution_digit.py 与 research_uniform_random_hash_distribution_digit.py
+研究统计任意两位组合的频率分布， 用来验证每一位的独立性， 共有16 * 16 = 256中组合
+btc_548496_blocks_hash_sha256_codes_product_hist_pd.py 与 uniform_random_548496_hash_codes_product_hist_pd.csv
 生成的结果csv中的mean, std, min 25%, 50%, 75%, max, chi, pvalue生成直观的柱形图，
 '''
 import numpy as np
@@ -9,15 +10,15 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.gridspec import GridSpec
 
-codes_hist_file = './results/BTC_548496blocks_hash_sha256_codes_digit_distribution.csv'
+codes_hist_file = './results/btc_548496_blocks_hash_sha256_codes_product_hist_pd.csv'
 codes_hist_df = pd.read_csv(codes_hist_file, index_col=0)
 
-random_codes_hist_file = './results/uniform_random_548496_hash_codes_digit_distribution.csv'
+random_codes_hist_file = './results/uniform_random_548496_hash_codes_product_hist_pd.csv'
 random_codes_hist_df = pd.read_csv(random_codes_hist_file, index_col=0)
 
 x = range(random_codes_hist_df.shape[0])
 fig = plt.figure(figsize=(10, 15))
-fig.suptitle('比特币548496个区块hash值再进行一次sha256之后各位数上16进制字符频率分布统计\nbenchmark为均匀分布随机生成的容量相同的sha256样本', fontproperties="SimHei", fontsize=16)
+fig.suptitle('比特币548496个区块hash值再进行一次sha256之后两位按笛卡尔组合字符(双16进制)频率分布统计\nbenchmark为均匀分布随机生成的容量相同的sha256样本', fontproperties="SimHei", fontsize=16)
 
 gs = GridSpec(5, 3, figure=fig)
 # fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(10, 15))
@@ -27,7 +28,7 @@ ax2 = fig.add_subplot(gs[2, :])
 ax3 = fig.add_subplot(gs[3, :])
 ax4 = fig.add_subplot(gs[4, :])
 
-ax1.set_ylim(ymin=33600, ymax=35300)
+ax1.set_ylim(ymin=1900, ymax=2500)
 # ax1.set_ylim(auto=True)
 ax1.plot(x, codes_hist_df['mean'], 'b-')
 ax1.plot(x, random_codes_hist_df['mean'], 'b-', dashes=[1, 1])
@@ -79,5 +80,5 @@ ax4.grid(True)
 ax4.legend(('btc pvalue', 'benchmark pvalue'))
 ax4.set_ylabel('pvalue(卡方检验结果)', fontproperties="SimHei", fontsize=14)
 
-fig.savefig('./temp/btc_blocks_hash_sha256_vs_random_hash.jpg')
+fig.savefig('./temp/btc_blocks_hash_sha256_indepedent_vs_random_hash_independent.jpg')
 plt.show()
