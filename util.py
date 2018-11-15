@@ -1,7 +1,7 @@
 #python 3.6
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import scipy.stats as stats
 import hashlib
 
@@ -29,13 +29,24 @@ def stats_data(data_pd: pd.DataFrame):
   return new_pd
 
 def hex_to_base_n(x, base_symbols):
-  pass
+  m = len(base_symbols)
+  results = []
+  number = int(x, 16)
+  while number > 0:
+    mod = number % m
+    number -= mod
+    number //= m
+    # number = int(number)
+    results.append(base_symbols[mod])
+  return results
 
 '''
 
 '''
 # 从16进制hash中取出一个数列
-def permutation_from_hex(x, base_symbols, uniq, count):
+# uniq 每个数字是否只能取出一次
+# count 取出的数量
+def permutation_from_hex(x, base_symbols, uniq, count=-1):
   results = []
   bs = list(base_symbols)
   number = int(x, 16)
@@ -44,14 +55,40 @@ def permutation_from_hex(x, base_symbols, uniq, count):
     if m == 0:
       break
     mod = number % m       # 求余数
-    symbol = bs[mode]      # 取数
+    symbol = bs[mod]      # 取数
     number -= mod
-    number /= m
-    number = int(number)
+    number //= m
     results.append(symbol)
-    if count > 0 && len(results) >= count :
+    if count > 0 and len(results) >= count :
       break
     if uniq:               # 不重复取值
       del bs[mod]
   
-  return results, number
+  return results, hex(number)
+
+def hex_to_series(x, rules):
+  series = []
+  for rule in rules:
+    results, rest_x = permutation_from_hex(x, rule['symbols'], rule['unique'], rule['count'])
+    series.append({
+      'symbol_list': results,
+      'index_list': [rule['symbols'].index(s) for s in results]
+    })
+    x = rest_x
+  return series
+# test
+'''
+rules = [
+    {
+    'symbols': '0123456789abcdef',
+    'unique': True,
+    'count': 1
+  }, {
+    'symbols': '0123456789abcdefghijklmnopqrstuvw',
+    'unique': True,
+    'count': 6
+  }
+]
+
+print(hex_to_series('76a914641ad5051edd97029a003fe9efb29359fcee409d88ac', rules))
+'''

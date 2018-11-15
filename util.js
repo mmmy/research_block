@@ -86,7 +86,7 @@ let rules = [
     count: 6
   }
 ]
-// console.log(integerToSeries('76a914641ad5051edd97029a003fe9efb29359fcee409d88ac', rules))
+console.log(integerToSeries('76a914641ad5051edd97029a003fe9efb29359fcee409d88ac', rules))
 
 module.exports = {
   JSONtoCSV,
