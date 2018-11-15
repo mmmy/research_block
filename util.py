@@ -28,4 +28,30 @@ def stats_data(data_pd: pd.DataFrame):
   new_pd['pvalue'] = pvalue
   return new_pd
 
+def hex_to_base_n(x, base_symbols):
+  pass
 
+'''
+
+'''
+# 从16进制hash中取出一个数列
+def permutation_from_hex(x, base_symbols, uniq, count):
+  results = []
+  bs = list(base_symbols)
+  number = int(x, 16)
+  while number > 0:
+    m = len(bs)
+    if m == 0:
+      break
+    mod = number % m       # 求余数
+    symbol = bs[mode]      # 取数
+    number -= mod
+    number /= m
+    number = int(number)
+    results.append(symbol)
+    if count > 0 && len(results) >= count :
+      break
+    if uniq:               # 不重复取值
+      del bs[mod]
+  
+  return results, number
