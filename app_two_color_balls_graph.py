@@ -15,8 +15,8 @@ file_name_2340 = './temp/btc_2340blocks_hash_sha256_to_two_color_ball.csv'
 
 df = pd.read_csv(file_name, index_col=0)
 
-plt_two_color_ball_stats(df, '比特币548496个区块hash值一次sha256之后，再生成双色球号码，数字频率分布统计', 'btc_548496blocks_hash_sha256')
+plt_two_color_ball_stats(df, '比特币548496个区块hash值一次sha256之后，再生成双色球号码，号码频率分布', 'btc_548496blocks_hash_sha256')
 # plt.show()
 
 df_2340 = pd.read_csv(file_name_2340, index_col=0)
-plt_two_color_ball_stats(df_2340, '比特币区块链中取出2340个区块的hash值一次sha256之后，再生成双色球号码，数字频率分布统计', 'btc_2340blocks_hash_sha256')
+plt_two_color_ball_stats(df_2340, '比特币区块链取2340个区块hash值一次sha256后，再生成双色球号码，号码频率分布', 'btc_2340blocks_hash_sha256')

@@ -31,7 +31,7 @@ def plt_two_color_ball_stats(df, title, file_prefix):
   fig.subplots_adjust(left=0.1, bottom=0.05, right=0.95, top=0.93)
   ax1.grid(True)
   ax1.bar(df_red_ball_hist_sum.index, df_red_ball_hist_sum.values)
-  ax1.set_title(title + ' - 红球(16选1)\n\
+  ax1.set_title(title + ' - 红球(33选6)\n\
                 mean={}, std={}\nmin={}, 25%={}, 75%={}, max={}\nchi={}, pvalue={}'\
                 .format(red_r0['mean'], red_r0['std'], red_r0['min'], red_r0['25%'], red_r0['75%'], red_r0['max'], red_r0['chi'], red_r0['pvalue']),
                 fontproperties="SimHei", fontsize=14, loc="left")
@@ -39,7 +39,7 @@ def plt_two_color_ball_stats(df, title, file_prefix):
   # ax2.margins(x=0, y=0.2)
   ax2.grid(True)
   ax2.bar(df_blue_ball_hist_sum.index, df_blue_ball_hist_sum.values)
-  ax2.set_title(title + ' - 蓝球(33选6)\n\
+  ax2.set_title(title + ' - 蓝球(16选1)\n\
                 mean={}, std={}\nmin={}, 25%={}, 75%={}, max={}\nchi={}, pvalue={}'\
                 .format(blue_r0['mean'], blue_r0['std'], blue_r0['min'], blue_r0['25%'], blue_r0['75%'], blue_r0['max'], blue_r0['chi'], blue_r0['pvalue']),
                 fontproperties="SimHei", fontsize=14, loc="left")
