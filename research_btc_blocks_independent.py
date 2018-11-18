@@ -1,3 +1,7 @@
+'''
+比特币区块链hash 一次sha256之后，每两位组合的字符统计分布
+注意此程序在pc上需要总共运行10小时左右
+'''
 #python 3.6
 import numpy as np
 import pandas as pd

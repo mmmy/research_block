@@ -1,3 +1,6 @@
+'''
+每两位组合的统计分布
+'''
 #python 3.6
 import numpy as np
 import pandas as pd
