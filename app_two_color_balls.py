@@ -37,8 +37,9 @@ df = pd.DataFrame(balls_index_list, columns=('r1','r2','r3','r4','r5','r6','b1')
 df.to_csv('./temp/btc_548496blocks_hash_sha256_to_two_color_ball.csv')
 print('btc_548496blocks_hash_sha256_to_two_color_ball.csv', '保存到temp/')
 
-# 从0开始每100抽取一个， 共抽取2340期
-balls_index_list_2340 = balls_index_list[::150][-2340:]
+# 从0开始 共抽取2340期
+# balls_index_list_2340 = balls_index_list[::150][-2340:]
+balls_index_list_2340 = balls_index_list[:2340]
 df_2340 = pd.DataFrame(balls_index_list_2340, columns=('r1','r2','r3','r4','r5','r6','b1')) + 1
 df_2340.to_csv('./temp/btc_2340blocks_hash_sha256_to_two_color_ball.csv')
 print('btc_2340blocks_hash_sha256_to_two_color_ball.csv', '保存到temp/')
