@@ -18,7 +18,7 @@ random_codes_hist_df = pd.read_csv(random_codes_hist_file, index_col=0)
 
 x = range(random_codes_hist_df.shape[0])
 fig = plt.figure(figsize=(10, 15))
-fig.suptitle('比特币548496个区块hash值再进行一次sha256之后两位按笛卡尔组合字符(双16进制)频率分布统计\nbenchmark为均匀分布随机生成的容量相同的sha256样本', fontproperties="SimHei", fontsize=16)
+fig.suptitle('比特币548496个区块hash值再进行一次sha256之后两位按笛卡尔组合字符(双16进制)频率分布统计\nbenchmark:计算机均匀分布随机生成的容量相同的sha256样本', fontproperties="SimHei", fontsize=16)
 
 gs = GridSpec(5, 3, figure=fig)
 # fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(10, 15))
@@ -80,5 +80,5 @@ ax4.grid(True)
 ax4.legend(('btc pvalue', 'benchmark pvalue'))
 ax4.set_ylabel('pvalue(卡方检验结果)', fontproperties="SimHei", fontsize=14)
 
-fig.savefig('./temp/btc_blocks_hash_sha256_indepedent_vs_random_hash_independent.jpg')
+fig.savefig('./temp/btc_blocks_hash_sha256_indepedent_vs_random_hash_independent.png')
 plt.show()

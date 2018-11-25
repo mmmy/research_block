@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.gridspec import GridSpec
 
+only_btc = False
+
 codes_hist_file = './results/BTC_548496blocks_hash_sha256_codes_digit_distribution.csv'
 codes_hist_df = pd.read_csv(codes_hist_file, index_col=0)
 
@@ -30,17 +32,17 @@ ax4 = fig.add_subplot(gs[4, :])
 ax1.set_ylim(ymin=33600, ymax=35300)
 # ax1.set_ylim(auto=True)
 ax1.plot(x, codes_hist_df['mean'], 'b-')
-ax1.plot(x, random_codes_hist_df['mean'], 'b-', dashes=[1, 1])
+not only_btc and ax1.plot(x, random_codes_hist_df['mean'], 'b-', dashes=[1, 1])
 ax1.plot(x, codes_hist_df['min'], 'g-')
-ax1.plot(x, random_codes_hist_df['min'], 'g-', dashes=[1, 1])
+not only_btc and ax1.plot(x, random_codes_hist_df['min'], 'g-', dashes=[1, 1])
 ax1.plot(x, codes_hist_df['25%'], 'c-')
-ax1.plot(x, random_codes_hist_df['25%'], 'c-', dashes=[1, 1])
+not only_btc and ax1.plot(x, random_codes_hist_df['25%'], 'c-', dashes=[1, 1])
 ax1.plot(x, codes_hist_df['50%'], 'r-')
-ax1.plot(x, random_codes_hist_df['50%'], 'r-', dashes=[1, 1])
+not only_btc and ax1.plot(x, random_codes_hist_df['50%'], 'r-', dashes=[1, 1])
 ax1.plot(x, codes_hist_df['75%'], 'k-')
-ax1.plot(x, random_codes_hist_df['75%'], 'k-', dashes=[1, 1])
+not only_btc and ax1.plot(x, random_codes_hist_df['75%'], 'k-', dashes=[1, 1])
 ax1.plot(x, codes_hist_df['max'], 'm-')
-ax1.plot(x, random_codes_hist_df['max'], 'm-', dashes=[1, 1])
+not only_btc and ax1.plot(x, random_codes_hist_df['max'], 'm-', dashes=[1, 1])
 ax1.grid(True)
 
 ax1.legend(('btc mean',
@@ -54,7 +56,7 @@ ax1.legend(('btc mean',
             'btc 75%',
             'benchmark 75%',
             'btc max',
-            'benchmark max'), loc='upper center', ncol=4)
+            'benchmark max')[::(2 if only_btc else 1)], loc='upper center', ncol=4)
 
 ax1.set_ylabel('frequency(频率)', fontproperties="SimHei", fontsize=14)
 # ax1.set_xlabel('index of digit')
@@ -79,5 +81,5 @@ ax4.grid(True)
 ax4.legend(('btc pvalue', 'benchmark pvalue'))
 ax4.set_ylabel('pvalue(卡方检验结果)', fontproperties="SimHei", fontsize=14)
 
-fig.savefig('./temp/btc_blocks_hash_sha256_vs_random_hash.jpg')
+fig.savefig('./temp/btc_blocks_hash_sha256_vs_random_hash.png')
 plt.show()

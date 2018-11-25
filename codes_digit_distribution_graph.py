@@ -27,7 +27,7 @@ def draw_graphs(df, start_x, title, save_file_name):
     ax = axes[i]
     ax.yaxis.set_major_formatter(mpl.ticker.FuncFormatter(lambda x, p: str(int(x / 1000)) + 'k'))
     ax.bar(hist.index, hist.values)
-    ax.set_title('X={}'.format(i + start_x), fontsize=12)
+    ax.set_title('i={}'.format(i + start_x), fontsize=12)
 
   fig.savefig('./temp/{}'.format(save_file_name))
   print(save_file_name, '已经保存在temp/')
@@ -36,23 +36,23 @@ codes_hist_file = './results/BTC_548496blocks_hash_sha256_codes_digit_distributi
 codes_hist_df = pd.read_csv(codes_hist_file, index_col=0)
 
 def get_btc_title(index):
-  return '({}/4)比特币区块链548496个区块hash值再进行一次sha256后各位16进制字符频率分布，X从左到右'.format(index)
+  return '({}/4)比特币区块链548496个区块hash值再进行一次sha256后各位16进制字符频率分布，i从左到右'.format(index)
 
-draw_graphs(codes_hist_df.iloc[0:16], 0, get_btc_title(1), 'btc_548496_blocks_hash_sha256_codes_hist_1.jpg')
-draw_graphs(codes_hist_df.iloc[16:32], 16, get_btc_title(2), 'btc_548496_blocks_hash_sha256_codes_hist_2.jpg')
-draw_graphs(codes_hist_df.iloc[32:48], 32, get_btc_title(3), 'btc_548496_blocks_hash_sha256_codes_hist_3.jpg')
-draw_graphs(codes_hist_df.iloc[48:64], 48, get_btc_title(4), 'btc_548496_blocks_hash_sha256_codes_hist_4.jpg')
+draw_graphs(codes_hist_df.iloc[0:16], 0, get_btc_title(1), 'btc_548496_blocks_hash_sha256_codes_hist_1.png')
+draw_graphs(codes_hist_df.iloc[16:32], 16, get_btc_title(2), 'btc_548496_blocks_hash_sha256_codes_hist_2.png')
+draw_graphs(codes_hist_df.iloc[32:48], 32, get_btc_title(3), 'btc_548496_blocks_hash_sha256_codes_hist_3.png')
+draw_graphs(codes_hist_df.iloc[48:64], 48, get_btc_title(4), 'btc_548496_blocks_hash_sha256_codes_hist_4.png')
 
 # uniform random hash for benchmark
 random_codes_hist_file = './results/uniform_random_548496_hash_codes_digit_distribution.csv'
 random_codes_hist_df = pd.read_csv(random_codes_hist_file, index_col=0)
 
 def get_benchmark_title(index):
-  return '({}/4)python随机均分布生成548496个随机hash后各位16进制字符频率分布，X从左到右'.format(index)
+  return '({}/4)benchmark:计算机随机均分布生成548496个随机hash后各位16进制字符频率分布，i从左到右'.format(index)
 
-draw_graphs(codes_hist_df.iloc[0:16], 0, get_benchmark_title(1), 'uniform_random_548496_hash_codes_hist_1.jpg')
-draw_graphs(codes_hist_df.iloc[16:32], 16, get_benchmark_title(2), 'uniform_random_548496_hash_codes_hist_2.jpg')
-draw_graphs(codes_hist_df.iloc[32:48], 32, get_benchmark_title(3), 'uniform_random_548496_hash_codes_hist_3.jpg')
-draw_graphs(codes_hist_df.iloc[48:64], 48, get_benchmark_title(4), 'uniform_random_548496_hash_codes_hist_4.jpg')
+draw_graphs(codes_hist_df.iloc[0:16], 0, get_benchmark_title(1), 'uniform_random_548496_hash_codes_hist_1.png')
+draw_graphs(codes_hist_df.iloc[16:32], 16, get_benchmark_title(2), 'uniform_random_548496_hash_codes_hist_2.png')
+draw_graphs(codes_hist_df.iloc[32:48], 32, get_benchmark_title(3), 'uniform_random_548496_hash_codes_hist_3.png')
+draw_graphs(codes_hist_df.iloc[48:64], 48, get_benchmark_title(4), 'uniform_random_548496_hash_codes_hist_4.png')
 
 # plt.show()

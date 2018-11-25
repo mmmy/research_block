@@ -77,18 +77,17 @@ def hex_to_series(x, rules):
     x = rest_x
   return series
 # test
-'''
+
 rules = [
-    {
-    'symbols': '0123456789abcdef',
-    'unique': True,
-    'count': 1
-  }, {
-    'symbols': '0123456789abcdefghijklmnopqrstuvw',
+  {  
+    'symbols': range(1, 34), #'0123456789abcdefghijklmnopqrstuvw',
     'unique': True,
     'count': 6
+  }, {
+    'symbols': range(1, 17), #'0123456789abcdef',
+    'unique': True,
+    'count': 1
   }
 ]
 
-print(hex_to_series('76a914641ad5051edd97029a003fe9efb29359fcee409d88ac', rules))
-'''
+print(hex_to_series('8d98fb67850b4fd740330f2e5067595962c61ac86a3358ba5a4de55e66ff5704', rules))
