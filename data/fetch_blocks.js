@@ -70,10 +70,10 @@ async function run() {
   while(hasNewData) {
     const remains = Math.round(remainDays(lastTimestamp))
     console.log('remain days:', remains)
-    if (remains === 0) {
-      console.log('remain is 0, finished')
-      break
-    }
+    // if (remains === 0) {
+    //   console.log('remain is 0, finished')
+    //   break
+    // }
     let requestTime = lastTimestamp
     try {
       const res = await blockexplorer.getBlocks(requestTime)
