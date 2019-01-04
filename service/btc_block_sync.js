@@ -66,7 +66,7 @@ function handRecieveBlock(json) {
     db_client.writePoints([{
       measurement: 'btc_block',
       fields: { time, hash, height, nTx, totalBTCSent, mrklRoot },
-      timestamp: new Date(time) * 1E6
+      timestamp: new Date(time * 1000) * 1E6
     }])
   } catch (e) {
     console.log('write data error', e)
