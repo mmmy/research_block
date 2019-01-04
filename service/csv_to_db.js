@@ -31,7 +31,7 @@ for (let i = 0; i < csvList.length - 1; i++) {
   dataPoints.push({
     measurement: 'btc_block',
     fields: { time, hash, height },
-    timestamp: new Date(time) * 1E6
+    timestamp: new Date(time * 1000) * 1E6
   })
 }
 
