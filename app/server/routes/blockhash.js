@@ -24,6 +24,6 @@ router.get('/btc/height', function(req, res, next) {
   }).catch(e => {
     res.status(500).send({result: false, info: e})
   })
-})
+}) 
 
 module.exports = router;
