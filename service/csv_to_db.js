@@ -21,6 +21,7 @@ const sleep = (secs) => {
 }
 
 let dataPoints = []
+let maxHeight = 556971
 
 for (let i = 0; i < csvList.length - 1; i++) {
   const row = csvList[i]
@@ -28,11 +29,13 @@ for (let i = 0; i < csvList.length - 1; i++) {
   const height = +splits[0]
   const time = +splits[1]
   const hash = splits[2]
-  dataPoints.push({
-    measurement: 'btc_block',
-    fields: { time, hash, height },
-    timestamp: new Date(time * 1000) * 1E6
-  })
+  if (height <= maxHeight) {
+    dataPoints.push({
+      measurement: 'btc_block',
+      fields: { time, hash, height },
+      timestamp: new Date(time * 1000) * 1E6
+    })
+  }
 }
 
 const writelen = 1E4

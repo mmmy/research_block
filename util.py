@@ -77,7 +77,7 @@ def hex_to_series(x, rules):
     x = rest_x
   return series
 # test
-'''
+
 rules = [
   {  
     'symbols': range(1, 34), #'0123456789abcdefghijklmnopqrstuvw',
@@ -91,4 +91,3 @@ rules = [
 ]
 
 print(hex_to_series('8d98fb67850b4fd740330f2e5067595962c61ac86a3358ba5a4de55e66ff5704', rules))
-'''

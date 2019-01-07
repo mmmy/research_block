@@ -20,6 +20,10 @@ const BtcBlockChain = {
   getBtcBlockByHeight: function(height) {
     return blockchain_client.query(`select * from btc_block where height = ${height}`)
   },
+
+  getLatestBtcBlocks: function(count) {
+
+  },
 }
 
 exports.BtcBlockChain = BtcBlockChain

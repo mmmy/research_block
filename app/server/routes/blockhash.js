@@ -18,6 +18,7 @@ router.get('/btc/height', function(req, res, next) {
   const { height } = req.query
   if (height === undefined) {
     res.status(500).send({result: false, info: 'height is required'})
+    return
   }
   BtcBlockChain.getBtcBlockByHeight(height).then(items => {
     res.send({result: true, block: items[0]})

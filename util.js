@@ -60,37 +60,61 @@ const permutationFromInteger = (x, baseSymbols, uniq, count) => {
 
 // console.log(integerToBaseN('8d98fb67850b4fd740330f2e5067595962c61ac86a3358ba5a4de55e66ff5704', '0123456789abcdefghijklmnopqrstuvw'))
 
-// rules = [{symbols, unique, count}]
-const integerToSeries = (x, rules) => {
+// rules = [{symbols[array] or base[int], unique, count}]
+const hexIntegerToSeries = (x, rules) => {
   const results = []
   for (let i = 0; i < rules.length; i++) {
     const rule = rules[i]
-    const data = permutationFromInteger(x, rule.symbols, rule.unique, rule.count)
+    if (!rule.symbols && !rule.base) {
+      throw 'rule.symbols or rule.base must be assign'
+    }
+    let symbols = rule.symbols
+    if (!symbols) {
+      symbols = []
+      for (let i=0; i<rule.base; i++) {     // 根据base生成 ['1','2','3',...,'base']
+        symbols.push(`${i + 1}`)
+      }
+    }
+    const data = permutationFromInteger(x, symbols, rule.unique, rule.count)
     results.push({
-      symbol: data.results,
-      index: data.results.map(s => rule.symbols.indexOf(s))
+      result: data.results,
+      symbol_index: data.results.map(s => symbols.indexOf(s))
     })
     x = data.restX
   }
   return results
 }
+/*
 // 双色球
 let rules = [
   {
-    symbols: '0123456789abcdef',
-    unique: true,
-    count: 1
-  }, {
     symbols: '0123456789abcdefghijklmnopqrstuvw',
     unique: true,
     count: 6
+  }, {
+    symbols: '0123456789abcdef',
+    unique: true,
+    count: 1
   }
 ]
-console.log(integerToSeries('76a914641ad5051edd97029a003fe9efb29359fcee409d88ac', rules))
-
+console.log(hexIntegerToSeries('8d98fb67850b4fd740330f2e5067595962c61ac86a3358ba5a4de55e66ff5704', rules))
+// 双色球2
+let rules2 = [
+  {
+    base: 33,
+    unique: true,
+    count: 6
+  }, {
+    base: 16,
+    unique: true,
+    count: 1
+  }
+]
+console.log(hexIntegerToSeries('8d98fb67850b4fd740330f2e5067595962c61ac86a3358ba5a4de55e66ff5704', rules2))
+*/
 module.exports = {
   JSONtoCSV,
   integerToBaseN,
   permutationFromInteger,
-  integerToSeries,
+  hexIntegerToSeries,
 }
