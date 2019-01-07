@@ -21,8 +21,8 @@ const BtcBlockChain = {
     return blockchain_client.query(`select * from btc_block where height = ${height}`)
   },
 
-  getLatestBtcBlocks: function(count) {
-
+  getLatestBtcBlocks: function(count = 5) {
+    return blockchain_client.query(`select * from btc_block order by time desc limit ${count}`)
   },
 }
 
