@@ -78,7 +78,8 @@ const hexIntegerToSeries = (x, rules) => {
     const data = permutationFromInteger(x, symbols, rule.unique, rule.count)
     results.push({
       result: data.results,
-      symbol_index: data.results.map(s => symbols.indexOf(s))
+      symbol_index: data.results.map(s => symbols.indexOf(s)),
+      rule,
     })
     x = data.restX
   }
@@ -112,6 +113,7 @@ let rules2 = [
 ]
 console.log(hexIntegerToSeries('8d98fb67850b4fd740330f2e5067595962c61ac86a3358ba5a4de55e66ff5704', rules2))
 */
+
 module.exports = {
   JSONtoCSV,
   integerToBaseN,
