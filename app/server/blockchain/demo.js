@@ -11,12 +11,12 @@ for (let i = 0; i < 1000; i++) {
 
 function hashesToSeriesDemo256(hashes) {
   const fhashParams = ['sha256', 1, 0]
-  return core.hashToSeries(hashes, fhashParams, fromBaseSelect1Rules)
+  return core.hashToSeries(hashes, fhashParams, fromBaseSelect1Rules).filter(o => o.result.length > 0)
 }
 
 function hashesToSeriesDemo512(hashes) {
   const fhashParams = ['sha512', 1, 0]
-  return core.hashToSeries(hashes, fhashParams, fromBaseSelect1Rules)
+  return core.hashToSeries(hashes, fhashParams, fromBaseSelect1Rules).filter(o => o.result.length > 0)
 }
 
 // console.log(hashesToSeriesDemo512(['1','9']).filter(o => o.result.length > 0).length)
