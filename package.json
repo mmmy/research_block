@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mmmy/research_block#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "big-integer": "^1.6.36",
     "blockchain.info": "^2.12.1",
     "influx": "^5.0.7",

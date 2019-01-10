@@ -77,7 +77,7 @@ const hexIntegerToSeries = (x, rules) => {
     }
     const data = permutationFromInteger(x, symbols, rule.unique, rule.count)
     results.push({
-      result: data.results,
+      symbols: data.results,
       symbol_index: data.results.map(s => symbols.indexOf(s)),
       rule,
     })
