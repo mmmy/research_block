@@ -35,7 +35,7 @@ function getBtcBlocks(from_date) {
 }
 
 function getBtcBlocksByTime(from_date, count = 1) {
-  return blockchain_client.query(`select * from btc_block where time > '${from_date}' and time < '${from_date}' + 3h order by time limit ${count}`)
+  return blockchain_client.query(`select * from btc_block where time > '${from_date}' and time < '${from_date}' + 1d order by time limit ${count}`)
 }
 
 async function main() {
@@ -48,7 +48,7 @@ async function main() {
   }
   // const firstSsqDate = firstSsq.date
   const lastSsqMockDate = lastSsqMock && lastSsqMock.date
-  const whereClause = lastSsqMockDate ? `where time > '${lastSsqMockDate}'` : ''
+  const whereClause = lastSsqMockDate ? `where time > '${lastSsqMockDate}'` : "where time > '2009-01-09'"
   const dates_rows = await bocai_client.query(`select * from ssq ${whereClause} order by time`)
   console.log('需要同步日期数', dates_rows && dates_rows.length)
 

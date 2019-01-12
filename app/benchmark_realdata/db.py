@@ -25,3 +25,9 @@ def write_ssq_data(data):
     'time': item[0]
   } for item in data]
   bocai_client.write_points(points)
+
+def get_ssq():
+  return bocai_client.query("select * from ssq where time > '2009-01-09' order by time")
+
+def get_ssq_btc():
+  return bocai_client.query("select * from ssq_btc where time > '2009-01-09' order by time")
