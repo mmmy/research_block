@@ -74,7 +74,7 @@ function hashesToSeriesDemo512(hashes) {
 }
 
 function hashesToSSQ(hashes) {
-  const fhashParams = ['sha512', 1, 0]
+  const fhashParams = ['sha256', 1, 0]
   const result = core.hashToSeries(hashes, fhashParams, ssqRules)
   return {
     result,
@@ -83,7 +83,7 @@ function hashesToSSQ(hashes) {
 }
 
 function hashesToDLT(hashes) {
-  const fhashParams = ['sha512', 1, 1]
+  const fhashParams = ['sha256', 1, 1]
   const result = core.hashToSeries(hashes, fhashParams, dltRules)
   return {
     result,
@@ -92,7 +92,7 @@ function hashesToDLT(hashes) {
 }
 
 function hashesTo5_22(hashes) {
-  const fhashParams = ['sha512', 1, 2]
+  const fhashParams = ['sha256', 1, 2]
   const result = core.hashToSeries(hashes, fhashParams, rules5_22)
   return {
     result,
@@ -101,7 +101,7 @@ function hashesTo5_22(hashes) {
 }
 
 function hashesTo20_100(hashes) {
-  const fhashParams = ['sha512', 1, 3]
+  const fhashParams = ['sha512', 1, 0]
   const result = core.hashToSeries(hashes, fhashParams, rules20_100)
   return {
     result,

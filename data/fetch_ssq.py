@@ -38,7 +38,7 @@ def get_data(html):
 
 def fetch_all_data():
   all_data = []
-  total_page = 117
+  total_page = 119
   for i in range(total_page):
     print('page', i+1)
     url = get_url(i + 1)
