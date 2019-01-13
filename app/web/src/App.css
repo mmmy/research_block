@@ -1,7 +1,8 @@
 @import '~antd/dist/antd.css';
 
 .App {
-
+  max-width: 900px;
+  margin: auto;
 }
 
 .App-logo {
@@ -31,4 +32,42 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: "";
+  clear: both;
+  height: 0;
+}
+
+header {
+  padding: 5px 20px;
+  border-bottom: 1px solid #cacade;
+  /* margin-bottom: 20px; */
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: 24px;
+}
+
+header .title {
+  float: left;
+}
+
+header nav {
+  margin-top: 5px;
+  float: right;
+  font-size: 16px;
+}
+
+header nav a {
+  margin-left: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
 }

@@ -1,0 +1,56 @@
+
+table {
+  
+}
+
+th, td {
+  border: 1px solid #aaa;
+}
+
+.demo-container ul {
+  display: inline;
+  padding: 0 3px;
+  margin-left: 5px;
+  border: 1px dashed #aaa;
+  border-radius: 4px;
+}
+
+.demo-container ul li {
+  list-style: none;
+  display: inline;
+}
+
+.demo-container .symbols span {
+  display: inline-block;
+  border: 1px solid #f52727;
+  min-width: 23px;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: 2px;
+  font-weight: bold;
+  color: #f52727;
+}
+/* ssq dlt */
+.symbols.dlt_btc span, .symbols.ssq_btc span {
+  border-color: #ff6000;
+  color: #ff6000;
+  /* background: red; */
+}
+
+.symbols.dlt_btc span:nth-child(6), .symbols.dlt_btc span:nth-child(7), .symbols.ssq_btc span:last-child {
+  border-color: blue;
+  color: blue;
+  margin-left: 10px;
+}
+
+.symbols.dlt_btc span:nth-child(7) {
+  margin-left: 0;
+}
+
+.home {
+  padding: 20px;
+}
+
+.home h2 {
+  border-bottom: 1px solid #aaa;
+}

@@ -1,6 +1,6 @@
 var d0 = new Date()
 
-var last = 512
+var last = 256
 var test = 30
 
 for (let i=0; i<2**30; i++) {
