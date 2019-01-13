@@ -4,6 +4,8 @@ import axios from 'axios'
 // import {
 //   Form, Icon, Input, Button, Checkbox, Notification
 // } from 'antd'
+import { Spin } from 'antd'
+
 import './index.css'
 import yuanliImg from '../../static/yuanli.png'
 
@@ -15,6 +17,7 @@ export default class Home extends Component {
       demos: [],
       blocks: [],
       error: false,
+      pending: true,
     }
   }
 
@@ -23,22 +26,25 @@ export default class Home extends Component {
       if (status === 200) {
         this.setState({
           demos: data.demos,
-          blocks: data.blocks
+          blocks: data.blocks,
+          pending: false,
         })
       } else {
         this.setState({
-          error: data
+          error: data,
+          pending: false,
         })
       }
     }).catch(e => {
       this.setState({
-        error: e
+        error: e,
+        pending: false
       })
     })
   }
 
   render() {
-    const { demos, blocks, error } = this.state
+    const { demos, blocks, error, pending } = this.state
     return <div className="home">
       <div>
         <h3>比特币最新区块链数据</h3>
@@ -61,6 +67,9 @@ export default class Home extends Component {
          
         </p>
         <div>
+          {
+            pending && <div><Spin /> 加载数据...</div>
+          }
           {
             demos.map((demo) => {
               const { name, items } = demo
