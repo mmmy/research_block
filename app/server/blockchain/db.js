@@ -7,6 +7,12 @@ const blockchain_client = new Influx.InfluxDB({
   port: 8086,
 })
 
+const bocai_client = new Influx.InfluxDB({
+  database: 'bocai',
+  host: 'localhost',
+  port: 8086
+})
+
 const BtcBlockChain = {
   getBtcBlocksTotal: function() {
     return blockchain_client.query(`select count(hash) from btc_block`)
@@ -26,4 +32,22 @@ const BtcBlockChain = {
   },
 }
 
+const Bocai = {
+  getSsqTotal: function() {
+    return bocai_client.query('select count(date) from ssq')
+  },
+  getSsqBtcTotal: function() {
+    return bocai_client.query('select count(date) from ssq_btc')
+  },
+  getSsq: function(page, page_size) {
+    const offset = page * page_size
+    return bocai_client.query(`select * from ssq order by time desc limit ${page_size} offset ${offset}`)
+  },
+  getSsqBtc: function(page, page_size) {
+    const offset = page * page_size
+    return bocai_client.query(`select * from ssq_btc order by time desc limit ${page_size} offset ${offset}`)
+  },
+}
+
 exports.BtcBlockChain = BtcBlockChain
+exports.Bocai = Bocai

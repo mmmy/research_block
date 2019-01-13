@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Home from './views/Home'
 import PlayGround from './views/PlayGround'
+import SsqDemo from './views/SsqDemo'
 // import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
@@ -22,7 +23,8 @@ class App extends Component {
             </nav>
           </header>
           <Route exact path='/' component={Home} />
-          <Route path='/ssq' component={PlayGround} />
+          <Route path='/ssq' component={SsqDemo} />
+          <Route path='/playground' component={PlayGround} />
         </div>
       </Router>
     );
