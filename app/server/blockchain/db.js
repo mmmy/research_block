@@ -20,7 +20,7 @@ const BtcBlockChain = {
 
   getBtcBlocks: function(page, page_size) {
     const offset = page * page_size
-    return blockchain_client.query(`select * from btc_block order by time limit ${page_size} offset ${offset}`)
+    return blockchain_client.query(`select * from btc_block order by time desc limit ${page_size} offset ${offset}`)
   },
 
   getBtcBlockByHeight: function(height) {

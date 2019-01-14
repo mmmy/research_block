@@ -45,7 +45,7 @@ export default class Home extends Component {
 
   render() {
     const { demos, blocks, error, pending } = this.state
-    return <div className="home">
+    return <div className="content-container home">
       <div>
         <h3>比特币最新区块链数据</h3>
         <p>数据来源<a href="https://www.blockchain.com/zh/api">https://www.blockchain.com/zh/api</a>, 可能会有延迟, 如有错误请反馈邮箱 yqhero@aliyun.com</p>
@@ -82,7 +82,17 @@ export default class Home extends Component {
                 <h3>{name}</h3>
                 <p>
                   <strong>规则与协议:</strong><br />
-                  <strong>F_hash参数: </strong>{`SHA=${fhashParams[0]}, a=${fhashParams[1]}, b=${fhashParams[2]}`}<br />
+                  <strong>F_hash参数: </strong>
+                  {
+                    fhashParams.map(params => {
+                      return <ul>
+                        <li>SHA={params[0]}</li>
+                        <li>a={params[1]}</li>
+                        <li>b={params[2]}</li>
+                      </ul>
+                    })
+                  }
+                  <br />
                   <strong>取数规则Y: </strong>
                   {
                     rules.map(r => {

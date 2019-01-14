@@ -1,0 +1,25 @@
+
+.ssq-data-table th, .ssq-data-table td {
+  padding: 0 5px;
+}
+
+.ssq-data-table .numbers span {
+  display: inline-block;
+  border: 1px solid #f52727;
+  min-width: 23px;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: 2px;
+  font-weight: bold;
+  color: #f52727;
+}
+
+.ssq-data-table .numbers span:last-child {
+  border-color: blue;
+  color: blue;
+  margin-left: 10px;
+}
+
+.ssq-demo h2 {
+  border-bottom: 1px solid #aaa;
+}

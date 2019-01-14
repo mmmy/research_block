@@ -16,24 +16,45 @@ export default class PlayGround extends React.Component {
       fetch_blocks_pending: true
     }
   }
-  
+
   componentDidMount() {
     this.fetchBtcBlocks()
   }
 
   render() {
-    const { total, page_size, page } = this.state
-    return <div className="playground">
-      <Pagination size="small" current={page} pageSize={page_size} total={total} showSizeChanger showQuickJumper showTotal={total => `共${total}条记录`} onChange={this.handleChangePage.bind(this)} onShowSizeChange={this.handleChangePageSize.bind(this)}/>
+    const { total, page_size, page, blocks, fetch_blocks_pending } = this.state
+    return <div className="content-container playground">
+      <h2>PlayGround</h2>
+      <h4>比特币区块链区块信息</h4>
+      <div style={{ position: 'relative', display: 'inline-block' }}>
+        <table>
+          <thead><tr><th>区块高度</th><th>区块ISO时间(0区时)</th><th>区块本地时间</th><th>hash(64位十六进制)</th></tr></thead>
+          <tbody>
+            {
+              blocks.map(b => {
+                const time = new Date(b.time)
+                return <tr><td>{b.height}</td><td>{b.time}</td><td>{`${time.toLocaleDateString()} ${time.toLocaleTimeString()}`}</td><td>{b.hash}</td></tr>
+              })
+            }
+          </tbody>
+        </table>
+        {
+          fetch_blocks_pending && <div className="spin-container"><Spin /></div>
+        }
+      </div>
+      <Pagination size="small" current={page} pageSize={page_size} total={total} showSizeChanger showQuickJumper showTotal={total => `共${total}条记录`} onChange={this.handleChangePage.bind(this)} onShowSizeChange={this.handleChangePageSize.bind(this)} />
       <div>
-        
+
       </div>
     </div>
   }
 
   fetchBtcBlocks() {
     const { page, page_size } = this.state
-    axios.post('/api/blockchain/btc', {page, page_size}).then(({data, status}) => {
+    this.setState({
+      fetch_blocks_pending: true
+    })
+    axios.post('/api/blockchain/btc', { page, page_size }).then(({ data, status }) => {
       if (status === 200) {
         this.setState({
           total: data.total,
@@ -51,7 +72,7 @@ export default class PlayGround extends React.Component {
     }).catch(e => {
       this.setState({
         fetch_blocks_pending: false,
-        fetch_blocks_error: e,        
+        fetch_blocks_error: e,
       })
     })
   }

@@ -20,11 +20,11 @@ function createC_hashes() {
     return hashes.join('')
   }
 }
-// 将hash按照F_hash, C_hashes, rules规则生成一个数组序列
+// 将hash按照F_hashes, C_hashes, rules规则生成一个数组序列
 function hashToSeries(hashes, fhashParams, rules) {
-  const F_hash = createF_hash.apply(null, fhashParams)
+  const F_hashes = fhashParams.map(params => createF_hash.apply(null, params))
   const C_hashes = createC_hashes()
-  const newHashes = hashes.map(h => F_hash(h))
+  const newHashes = hashes.map(h => F_hashes.map(F_hash => F_hash(h)).join(''))
   const Hfinal = C_hashes(newHashes)
   return hexIntegerToSeries(Hfinal, rules)
 }

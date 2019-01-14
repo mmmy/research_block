@@ -23,5 +23,5 @@ function calcDmin(rules) {
 
 exports.calcDmin = calcDmin
 
-// var dmin = calcDmin([{ unique: true, base: 33, count: 6 }, { unique: true, base: 16, count: 1 }])
+// var dmin = calcDmin([{ unique: true, base: 1E9, count: 5 }])
 // console.log(dmin)
