@@ -2,3 +2,17 @@
 .playground h2 {
   border-bottom: 1px solid #aaa;
 }
+
+.border {
+  border: 1px solid #bbb;
+}
+
+.dashed {
+  border-style: dashed;
+}
+
+.rules-list li {
+  /* border: 1px solid #91d5ff; */
+  /* background: #e6f7ff; */
+  color: #1890ff;
+}

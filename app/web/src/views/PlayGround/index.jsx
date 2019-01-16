@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-import { Spin, Pagination, Form, Input, Checkbox, Select, Icon, Button } from 'antd'
+import AddRule from '../components/AddRule'
+import { Spin, Pagination, Tag, Form, Input, Checkbox, Select, Icon, Button } from 'antd'
 import D_func_img from '../../static/D_func.png'
 import dfinal_img from '../../static/dfinal.png'
 
@@ -16,12 +17,7 @@ export default class PlayGround extends React.Component {
       blocks: [],
       fetch_blocks_error: 0,
       fetch_blocks_pending: true,
-      tempRule: {
-        unique: true,
-        base: 1000,
-        count: 100,
-      },
-      ruels: [],
+      rules: [{unique: false, base: 22, count: 5}],
     }
   }
 
@@ -30,37 +26,27 @@ export default class PlayGround extends React.Component {
   }
 
   render() {
-    const { total, page_size, page, blocks, fetch_blocks_pending, tempRule } = this.state
+    const { total, page_size, page, blocks, fetch_blocks_pending, rules } = this.state
     return <div className="content-container playground">
       <h2>PlayGround</h2>
       <h3>1.计算至少需要的16进制位数(d_final)</h3>
-      <div>
+      <div className="border dashed">
+        <h5>公式参考</h5>
+        <img style={{ width: '250px', marginRight: '10px' }} src={dfinal_img} />
+        其中:
         <img style={{ width: '300px' }} src={D_func_img} />
-        <img style={{ width: '250px' }} src={dfinal_img} />
       </div>
-      <div>
+      <br />
+      <div className="border dashed">
         <h5>设置取数规则</h5>
-        <Form layout="inline">
-          <Form.Item
-            label="基数"
-          >
-            <Input style={{ width: '100px' }} size="small" type="number" value={tempRule.base} onChange={this.handleChangeBase.bind(this)} />
-          </Form.Item>
-          <Form.Item
-            label="取数"
-          >
-            <Input style={{ width: '100px' }} size="small" type="number" value={tempRule.count} onChange={this.handleChangeCount.bind(this)} />
-          </Form.Item>
-          <Form.Item
-          >
-            <Checkbox checked={!tempRule.unique} onChange={this.handleChangeUnique.bind(this)}>可重复取数</Checkbox>
-          </Form.Item>
-          <Form.Item>
-            <Button title="添加规则" size="small">
-              <Icon type="plus" />
-            </Button>
-          </Form.Item>
-        </Form>
+        <AddRule onAdd={this.handleAddRule.bind(this)}/>
+        <ol className="rules-list" style={{fontSize: '14px', fontWeight: 'bold'}}>
+          {
+            rules.map(rule => {
+              return <li>(<span>{rule.unique ? '重复取数' : '非重复取数'}</span>,&nbsp;<span>{rule.base}</span>,&nbsp;<span>{rule.count}</span>)</li>
+            })
+          }
+        </ol>
       </div>
       <h4>比特币区块链区块信息</h4>
       <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -146,6 +132,11 @@ export default class PlayGround extends React.Component {
   handleChangeCount(e) {
     const { tempRule } = this.state
     tempRule.count = e.target.value
+    this.setState({})
+  }
+
+  handleAddRule(rule) {
+    this.state.rules.push(rule)
     this.setState({})
   }
 }
