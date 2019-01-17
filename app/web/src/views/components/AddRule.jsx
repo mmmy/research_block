@@ -32,7 +32,7 @@ class AddRule extends React.Component {
               rules: [{
                 required: true,
               }]
-            })(<InputNumber style={{ width: '100px' }} size="small" min={1} />)
+            })(<InputNumber style={{ width: '100px' }} size="small" min={1} max={99999} />)
           }
         </Form.Item>
         <Form.Item
