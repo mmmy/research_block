@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { BtcBlockChain } = require('../blockchain/db')
+const { hashToSeries } = require('../blockchain/core')
 const { hashesToSeriesDemo256, hashesToSeriesDemo512, hashesToSSQ, hashesToDLT, hashesTo5_22, hashesTo20_100 } = require('../blockchain/demo')
 
 /* GET home page. */
@@ -79,4 +80,20 @@ router.get('/btc/dice_demo', function (req, res, next) {
   })
 })
 
-module.exports = router;
+router.post('/demo/playground', (req, res, next) => {
+  const { hashes, rules, fhashes } = req.body
+  try {
+    const data = hashToSeries(hashes, fhashes, rules)
+    res.send({
+      result: true,
+      data
+    })
+  } catch(e) {
+    res.status(500).send({
+      result: false,
+      info: e
+    })
+  }
+})
+
+module.exports = router

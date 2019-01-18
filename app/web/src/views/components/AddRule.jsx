@@ -3,9 +3,7 @@ import { Form, Input, Button, Checkbox, Icon, InputNumber } from 'antd'
 
 class AddRule extends React.Component {
   state = {
-    unique: true,
-    base: 1000,
-    count: 100,
+
   }
   render() {
     const { getFieldDecorator } = this.props.form
@@ -20,7 +18,7 @@ class AddRule extends React.Component {
               rules: [{
                 required: true,
               }]
-            })(<InputNumber style={{ width: '100px' }} size="small" min={1} />)
+            })(<InputNumber style={{ width: '100px' }} size="small" min={1} precision={0}/>)
           }
         </Form.Item>
         <Form.Item
@@ -32,7 +30,7 @@ class AddRule extends React.Component {
               rules: [{
                 required: true,
               }]
-            })(<InputNumber style={{ width: '100px' }} size="small" min={1} max={99999} />)
+            })(<InputNumber style={{ width: '100px' }} size="small" min={1} max={99999} precision={0}/>)
           }
         </Form.Item>
         <Form.Item

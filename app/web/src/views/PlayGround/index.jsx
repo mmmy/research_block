@@ -1,12 +1,30 @@
 import React from 'react'
 import axios from 'axios'
 import AddRule from '../components/AddRule'
-import { Spin, Pagination, Tag, Form, Input, Checkbox, Select, Icon, Button } from 'antd'
+import HashConfig from '../components/HashConfig'
+import { Spin, Pagination, Tag, Form, Input, Checkbox, Select, Icon, Button, notification } from 'antd'
 import D_func_img from '../../static/D_func.png'
 import dfinal_img from '../../static/dfinal.png'
 import { calcDmin } from '../../helpers/calcDmin'
 
 import './index.css'
+
+function calcFhashDs(fhash) {
+  if (fhash.sha === 'sha256') {
+    return 64
+  } else if (fhash.sha === 'sha512') {
+    return 128
+  }
+  return 0
+}
+
+function calcFhashesDs(fhashes) {
+  let total = 0
+  fhashes.forEach(f => {
+    total += calcFhashDs(f)
+  })
+  return total
+}
 
 export default class PlayGround extends React.Component {
   constructor(props) {
@@ -19,7 +37,13 @@ export default class PlayGround extends React.Component {
       fetch_blocks_error: 0,
       fetch_blocks_pending: true,
       rules: [{ unique: false, base: 22, count: 5 }],
+      fhashes: [{ sha: 'sha512', a: 1, b: 0 }],
+      sourceHash: '00000000000000000025bc0bcc1a4a97be9dabc9b7c5d7dceb5f433f3aedfad4',
+      result: null,
+      fetch_result_loading: false,
     }
+    // 数字很大的时候计算会很久，所以不要每次渲染都计算
+    this.d_final = calcDmin(this.state.rules)
   }
 
   componentDidMount() {
@@ -27,8 +51,11 @@ export default class PlayGround extends React.Component {
   }
 
   render() {
-    const { total, page_size, page, blocks, fetch_blocks_pending, rules } = this.state
-    const d_final = calcDmin(rules)
+    const { total, page_size, page, blocks, fetch_blocks_pending, rules, fhashes, sourceHash, fetch_result_loading } = this.state
+    const dfinalInt = Math.ceil(this.d_final)
+
+    const fhashesTotal = this.getFhashedTotal()
+
     return <div className="content-container playground">
       <h2>PlayGround</h2>
       <h3>1.计算至少需要的16进制位数(d_final)</h3>
@@ -53,17 +80,41 @@ export default class PlayGround extends React.Component {
             })
           }
         </ol>
-        <p>d_final = <strong>{d_final.toFixed(2)}</strong> =(向上取整)=> <span style={{fontSize: '24px', color: 'blue'}}>{Math.ceil(d_final)}</span>
+        <p>d_final = <strong>{this.d_final.toFixed(2)}</strong> =(向上取整)=> <span style={{fontSize: '24px', color: 'blue'}}>{dfinalInt}</span>
         </p>
       </div>
       <br />
-      <h3>2.设置处理过程规则</h3>
+      <h3>2.输入原始hash</h3>
+      <div style={{fontSize: '12px'}}><i>理论上可以输入任何字符，但请最好输入一个64位的16进制值</i></div>
+      <Input value={sourceHash} type="text" size="small" onChange={this.handleChangeHash.bind(this)}/>
+      <br/>
+      <br/>
+      <h3>3.设置处理过程规则</h3>
       <p><i>生成更多hash位数有两种方式，这里只演示1个hash值，多个F_hash函数组合的方式</i></p>
       <div className="border dashed">
         <h4>设置F_hash参数</h4>
         <p><i>理论上处理原始hash的方式可以完全自定义，只要处理后的hash在统计上符合各个数位服从独立均匀分布的特点即可，
           只是更通常易于理解的是转换方式是先线性转换，然后SHA</i></p>
         <p><i>*所以这里使用的是 <strong>F_hash = SHA(原始hash * a + b)</strong></i></p>
+        <HashConfig onAdd={this.handleAddFhash.bind(this)} />
+        <div style={{fontSize: '12px'}}><i>*顺序不一样，结果会不一样</i></div>
+        <ol className="rules-list" style={{ fontSize: '14px', fontWeight: 'bold' }}>
+          {
+            fhashes.map((f, i) => {
+              return <li>
+                {f.sha}(hash * {f.a} + {f.b})&nbsp;==>生成 {calcFhashDs(f)} 位新hash&nbsp;
+                <Button shape="circle" size="small" type="danger" icon="delete" onClick={this.handleDeleteFhash.bind(this, i)}></Button>
+              </li>
+            })
+          }
+        </ol>
+        <p>
+          <Icon theme="filled" style={{color: fhashesTotal >= dfinalInt ? "green" : 'red', fontSize: '20px' }} type={fhashesTotal >= dfinalInt ? "check-circle" : "exclamation-circle"} />
+          共能产生<strong>{fhashesTotal}</strong>位hash, {fhashesTotal >= dfinalInt ? '能' : '不能'}满足第一步所需要的<strong>{dfinalInt}</strong>位</p>
+      </div>
+      <br />
+      <Button loading={fetch_result_loading} type="primary" onClick={this.handleFetchResult.bind(this)}>生成结果</Button>
+      <div>
         
       </div>
       <br />
@@ -156,11 +207,72 @@ export default class PlayGround extends React.Component {
 
   handleAddRule(rule) {
     this.state.rules.push(rule)
+    this.d_final = calcDmin(this.state.rules)
     this.setState({})
   }
 
   handleDeleteRule(index) {
     this.state.rules.splice(index, 1)
     this.setState({})
+  }
+
+  handleAddFhash(param) {
+    const { fhashes } = this.state
+    for (let i=0; i<fhashes.length; i++) {
+      const f = fhashes[i]
+      if (f.sha === param.sha && f.a === param.a && f.b === param.b) {
+        notification.warn({
+          message: '>_< 不能添加重复fhash'
+        })
+        return
+      }
+    }
+    this.state.fhashes.push(param)
+    this.setState({})
+  }
+  
+  handleDeleteFhash(index) {
+    this.state.fhashes.splice(index, 1)
+    this.setState({})
+  }
+
+  handleChangeHash(e) {
+    this.setState({
+      sourceHash: e.target.value
+    })
+  }
+
+  getFhashedTotal() {
+    return calcFhashesDs(this.state.fhashes)
+  }
+
+  handleFetchResult() {
+    const data = {
+      hashes: [this.state.sourceHash],
+      fhashes: this.state.fhashes.map(f => [f.sha, f.a, f.b]),
+      rules: this.state.rules,
+    }
+    this.setState({
+      fetch_result_loading: true,
+      data: null,
+    })
+    axios.post('/api/blockchain/demo/playground', data).then(({data, status}) => {
+      this.setState({
+        fetch_result_loading: false
+      })
+      if (status === 200) {
+        this.setState({
+          result: data
+        })
+      }
+    }).catch(e => {
+      this.setState({
+        fetch_result_loading: false
+      })
+      notification.error({
+        message: '失败',
+        description: e && e.toString(),
+      })
+    })
   }
 }
