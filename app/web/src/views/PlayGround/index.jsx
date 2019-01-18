@@ -36,7 +36,7 @@ export default class PlayGround extends React.Component {
       blocks: [],
       fetch_blocks_error: 0,
       fetch_blocks_pending: true,
-      rules: [{ unique: false, base: 22, count: 5 }],
+      rules: [{ unique: false, base: 100, count: 50 }, { unique: false, base: 33, count: 6 }],
       fhashes: [{ sha: 'sha512', a: 1, b: 0 }],
       sourceHash: '00000000000000000025bc0bcc1a4a97be9dabc9b7c5d7dceb5f433f3aedfad4',
       result: null,
@@ -48,17 +48,19 @@ export default class PlayGround extends React.Component {
 
   componentDidMount() {
     this.fetchBtcBlocks()
+    this.handleFetchResult()
   }
 
   render() {
-    const { total, page_size, page, blocks, fetch_blocks_pending, rules, fhashes, sourceHash, fetch_result_loading } = this.state
+    const { total, page_size, page, blocks, fetch_blocks_pending, result, rules, fhashes, sourceHash, fetch_result_loading } = this.state
     const dfinalInt = Math.ceil(this.d_final)
 
     const fhashesTotal = this.getFhashedTotal()
 
     return <div className="content-container playground">
       <h2>PlayGround</h2>
-      <h3>1.计算至少需要的16进制位数(d_final)</h3>
+      <br />
+      <h3>1.设置取数规则，计算至少需要的16进制位数(d_final)</h3>
       <div className="border dashed">
         <h5>公式参考</h5>
         <img style={{ width: '250px', marginRight: '10px' }} src={dfinal_img} />
@@ -85,7 +87,7 @@ export default class PlayGround extends React.Component {
       </div>
       <br />
       <h3>2.输入原始hash</h3>
-      <div style={{fontSize: '12px'}}><i>理论上可以输入任何字符，但请最好输入一个64位的16进制值</i></div>
+      <div style={{fontSize: '12px'}}><i>理论上可以输入任何字符，但请最好输入一个64位的16进制值, 可以参考复制页面底部的<a href="#cankao-hash">比特币区块链数据</a></i></div>
       <Input value={sourceHash} type="text" size="small" onChange={this.handleChangeHash.bind(this)}/>
       <br/>
       <br/>
@@ -113,12 +115,29 @@ export default class PlayGround extends React.Component {
           共能产生<strong>{fhashesTotal}</strong>位hash, {fhashesTotal >= dfinalInt ? '能' : '不能'}满足第一步所需要的<strong>{dfinalInt}</strong>位</p>
       </div>
       <br />
-      <Button loading={fetch_result_loading} type="primary" onClick={this.handleFetchResult.bind(this)}>生成结果</Button>
       <div>
-        
+        <Button loading={fetch_result_loading} type="primary" onClick={this.handleFetchResult.bind(this)}>生成结果</Button>
+      </div>
+      <br />   
+      <div className="hash-result-container">
+        {
+          result && result.map((item, i) => {
+            const rule = item.rule
+            return <div className="rule-row">
+              <h6>{i + 1}.({rule.unique ? '重复取数' : '非重复取数'}, {rule.base}, {rule.count})</h6>
+              <div className="border dashed symbols clearfix">
+                {
+                  item.symbols.map(s => {
+                    return <span className="symbol">{s}</span>
+                  })
+                }
+              </div>
+            </div>
+          })
+        }
       </div>
       <br />
-      <h4>比特币区块链区块信息</h4>
+      <h4 id="cankao-hash">参考hash值：比特币区块链区块信息</h4>
       <div style={{ position: 'relative', display: 'inline-block' }}>
         <table>
           <thead><tr><th>区块高度</th><th>区块ISO时间(0区时)</th><th>区块本地时间</th><th>hash(64位十六进制)</th></tr></thead>
@@ -254,7 +273,7 @@ export default class PlayGround extends React.Component {
     }
     this.setState({
       fetch_result_loading: true,
-      data: null,
+      data: [],
     })
     axios.post('/api/blockchain/demo/playground', data).then(({data, status}) => {
       this.setState({
@@ -262,7 +281,7 @@ export default class PlayGround extends React.Component {
       })
       if (status === 200) {
         this.setState({
-          result: data
+          result: data.data
         })
       }
     }).catch(e => {

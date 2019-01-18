@@ -16,3 +16,28 @@
   /* background: #e6f7ff; */
   color: #1890ff;
 }
+
+.hash-result-container {
+  border: 1px solid #aaa;
+  max-height: 500px;
+  overflow: auto;
+  padding: 20px;
+}
+
+.symbols {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.hash-result-container .symbol {
+  float: left;
+  min-width: 26px;
+  border: 1px solid #555;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  padding: 0 2px;
+}
