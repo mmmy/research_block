@@ -21,7 +21,8 @@ const sleep = (secs) => {
 }
 
 let dataPoints = []
-let maxHeight = 556971
+// let maxHeight = 556971
+let maxHeight = 40000
 
 for (let i = 0; i < csvList.length - 1; i++) {
   const row = csvList[i]
