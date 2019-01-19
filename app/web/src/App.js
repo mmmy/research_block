@@ -19,7 +19,7 @@ class App extends Component {
               <Link to="/">首页</Link>
               <Link to="/ssq">双色球示例</Link>
               <Link to="/playground">PlayGround</Link>
-              <a href='/paper'>论文</a>
+              <a target="_blank" href='/paper/paper.pdf'>论文</a>
             </nav>
           </header>
           <Route exact path='/' component={Home} />
