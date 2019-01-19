@@ -19,7 +19,7 @@ const BtcBlockChain = {
   },
 
   getBtcBlocks: function(page, page_size) {
-    const offset = page * page_size
+    const offset = (page - 1) * page_size
     return blockchain_client.query(`select * from btc_block order by time desc limit ${page_size} offset ${offset}`)
   },
 
@@ -40,11 +40,11 @@ const Bocai = {
     return bocai_client.query('select count(date) from ssq_btc')
   },
   getSsq: function(page, page_size) {
-    const offset = page * page_size
+    const offset = (page - 1) * page_size
     return bocai_client.query(`select * from ssq order by time desc limit ${page_size} offset ${offset}`)
   },
   getSsqBtc: function(page, page_size) {
-    const offset = page * page_size
+    const offset = (page - 1) * page_size
     return bocai_client.query(`select * from ssq_btc order by time desc limit ${page_size} offset ${offset}`)
   },
 }
