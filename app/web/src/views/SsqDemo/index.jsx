@@ -62,8 +62,8 @@ export default class SsqDemo extends React.Component {
       />
       <br />
       <h2>统计分布对比</h2>
-      <img width="800" src="/benchmark/ssq_btc_stats.png"/>
-      <img width="800" src="/benchmark/ssq_stats.png"/>
+      <img className="stats-img" src="/benchmark/ssq_btc_stats.png"/>
+      <img className="stats-img" src="/benchmark/ssq_stats.png"/>
     </div>
   }
 
