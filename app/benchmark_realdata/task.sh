@@ -8,7 +8,7 @@ node "${base_dir}/../server/sync_benchmark.js"
 python3 "${base_dir}/statistic_ssq.py"
 
 # copy
-target_dri = "/data/www/block_web/benchmark"
+target_dri="/data/www/block_web/benchmark"
 mkdir $target_dri
 chmod 777 $target_dri
 
