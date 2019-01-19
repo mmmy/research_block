@@ -9,7 +9,7 @@ python3 "${base_dir}/statistic_ssq.py"
 
 # copy
 target_dri = "/data/www/block_web/benchmark"
-mkdir target_dri
-chmod 777 target_dri
+mkdir $target_dri
+chmod 777 $target_dri
 
-cp -r "${base_dir}/temp/*" target_dri
+cp -r "${base_dir}/temp/*" $target_dri

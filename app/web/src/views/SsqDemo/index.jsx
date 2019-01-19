@@ -39,7 +39,7 @@ export default class SsqDemo extends React.Component {
         双色球是从2003年开始，每周两期，北京时间21:15开奖;<br />
         所以以下从2009/01/09开始，取真实双色球开奖时间(北京时间21:15)后的第一区块来生成双色球号码，并进行统计对比
       </p>
-      <h3>区块链hash值生成号码 <a style={{fontSize: '14px'}}>下载全部csv数据</a></h3>
+      <h3>区块链hash值生成号码 <a style={{fontSize: '14px'}} target="_blank" href="/benchmark/ssq_btc.csv">下载全部csv数据</a></h3>
       <div style={{ display: 'inline-block', position:'relative' }}>
         {this.renderDataTable(ssq_btc)}
         {ssq_btc.pending && <div className="spin-container"><Spin /></div>}
@@ -50,7 +50,7 @@ export default class SsqDemo extends React.Component {
         onChange={this.handleSelectPage.bind(this, 'ssq_btc')}
       />
       <br />
-      <h3>真实双色球号码 <a style={{fontSize: '14px'}}>下载全部csv数据</a></h3>
+      <h3>真实双色球号码 <a style={{fontSize: '14px'}} target="_blank" href="/benchmark/ssq.csv">下载全部csv数据</a></h3>
       <div style={{ display: 'inline-block', position: 'relative' }}>
         {this.renderDataTable(ssq)}
         {ssq.pending && <div className="spin-container"><Spin /></div>}
@@ -62,8 +62,8 @@ export default class SsqDemo extends React.Component {
       />
       <br />
       <h2>统计分布对比</h2>
-      {JSON.stringify(ssq)}
-      {JSON.stringify(ssq_btc)}
+      <img src="/benchmark/ssq_btc_stats.png"/>
+      <img src="/benchmark/ssq_stats.png"/>
     </div>
   }
 
