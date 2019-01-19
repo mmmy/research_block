@@ -136,7 +136,7 @@ export default class Home extends Component {
         这是利用统计学原理，归结为在样本容量为多少，误差小于多少的情况下，服从频率均匀分布且前后两次数字独立互不影响的特性，才可以接受这是个6面骰子这个断论。
       </p>
       <p>
-        在论文<a href="/paper/paper.pdf">《基于区块链hash值生成数列的系统与方法》</a>中做了基本统计来论证我们将原始hash进行线性处理后再进行SHA后的hash值的每一位
+        在论文<a target="_blank" href="/paper/paper.pdf">《基于区块链hash值生成数列的系统与方法》</a>中做了基本统计来论证我们将原始hash进行线性处理后再进行SHA后的hash值的每一位
         数字的分布服从独立均匀分布的特点。任何人使用任何方法都不能预测未来hash值的任何一位数字。
       </p>
       <h2>生成数列的过程</h2>
