@@ -5,3 +5,4 @@ __pycache__
 .vscode
 package-lock.json
 temp
+**/temp

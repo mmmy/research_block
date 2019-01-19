@@ -19,8 +19,10 @@ ssq_btc_start_date = ssq_btc_df['date'].iat[0]
 ssq_btc_end_date = ssq_btc_df['date'].iat[-1]
 # print(ssq_real_df)
 
-ssq_real_df.to_csv('../temp/ssq.csv', columns=['date', 'id', 'r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'b1'], index=False)
-ssq_btc_df.to_csv('../temp/ssq_btc.csv', columns=['date', 'id', 'r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'b1'], index=False)
+temp_path = os.path.dirname(os.path.abspath(__file__)) + '/temp'
+
+ssq_real_df.to_csv(temp_path + '/ssq.csv', columns=['date', 'id', 'r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'b1'], index=False)
+ssq_btc_df.to_csv(temp_path + '/ssq_btc.csv', columns=['date', 'id', 'r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'b1'], index=False)
 
 # 统计
 def create_hist_pd(codes):
@@ -69,8 +71,8 @@ def plt_ssq_stats(df, title, file_prefix):
                 .format(blue_r0['mean'], blue_r0['std'], blue_r0['min'], blue_r0['25%'], blue_r0['75%'], blue_r0['max'], blue_r0['chi'], blue_r0['pvalue']),
                 fontproperties="SimHei", fontsize=14, loc="left")
 
-  img_file = file_prefix + '_stats.jpg'
-  fig.savefig('../temp/' + img_file)
+  img_file = file_prefix + '_stats.png'
+  fig.savefig(temp_path + '/' + img_file)
   print(img_file, '保存到temp/')
 
 plt_ssq_stats(ssq_real_df, '从{}到{}共{}期双色球号码频率分布'.format(ssq_start_date, ssq_end_date, len(ssq_real)), 'ssq')
