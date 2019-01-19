@@ -1,0 +1,10 @@
+[Unit]
+Description=区块链hash值生成数列demo
+
+[Service]
+ExecStart=/usr/bin/node /root/workspace/research_block/app/server/bin/www --noProxy
+WorkingDirectory=/root/workspace
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

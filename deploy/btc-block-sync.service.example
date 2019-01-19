@@ -1,0 +1,10 @@
+[Unit]
+Description=btc blocks info socks async
+
+[Service]
+ExecStart=/usr/bin/node /root/workspace/research_block/service/btc_block_sync.js --noProxy
+WorkingDirectory=/root/workspace
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -84,6 +84,7 @@ router.post('/demo/playground', (req, res, next) => {
   const { hashes, rules, fhashes } = req.body
   try {
     const data = hashToSeries(hashes, fhashes, rules)
+    res.cookie('client', 'browser')
     res.send({
       result: true,
       data
