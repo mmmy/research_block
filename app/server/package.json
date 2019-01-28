@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@sentry/node": "^4.5.3",
     "big-integer": "^1.6.40",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
