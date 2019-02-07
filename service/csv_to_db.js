@@ -48,12 +48,12 @@ function delayWrite() {
     console.log('write data and remians', remainTimes)
     db_client.writePoints(dataToWrite).then(() => {
       console.log('write success')
+      setTimeout(() => {
+        delayWrite()
+      }, 1 * 1000)
     }).catch(e => {
       console.log('write error', e)
     })
-    setTimeout(() => {
-      delayWrite()
-    }, 5 * 1000)
   } else {
     console.log('write finish')
   }
