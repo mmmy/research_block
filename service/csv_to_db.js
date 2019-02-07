@@ -39,7 +39,7 @@ for (let i = 0; i < csvList.length - 1; i++) {
   }
 }
 
-const writelen = 1E3
+const writelen = 1E4
 function delayWrite() {
   const remainTimes = dataPoints.length / writelen
   const dataToWrite = dataPoints.slice(0, writelen)
