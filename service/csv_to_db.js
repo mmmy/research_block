@@ -42,8 +42,6 @@ for (let i = 0; i < csvList.length - 1; i++) {
   }
 }
 
-dataPoints = dataPoints.slice(writelen * startPage)
-
 function delayWrite() {
   const remainTimes = dataPoints.length / writelen
   const dataToWrite = dataPoints.slice(0, writelen)
