@@ -22,6 +22,9 @@ const sleep = (secs) => {
 
 let dataPoints = []
 // let maxHeight = 556971
+
+const writelen = 1E4
+const startPage = 26
 let maxHeight = 561789
 
 for (let i = 0; i < csvList.length - 1; i++) {
@@ -30,7 +33,7 @@ for (let i = 0; i < csvList.length - 1; i++) {
   const height = +splits[0]
   const time = +splits[1]
   const hash = splits[2]
-  if (height <= maxHeight) {
+  if (height <= maxHeight && height >= writelen * startPage) {
     dataPoints.push({
       measurement: 'btc_block',
       fields: { time, hash, height },
@@ -39,8 +42,6 @@ for (let i = 0; i < csvList.length - 1; i++) {
   }
 }
 
-const writelen = 1E4
-const startPage = 18
 dataPoints = dataPoints.slice(writelen * startPage)
 
 function delayWrite() {
