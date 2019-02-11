@@ -24,8 +24,8 @@ let dataPoints = []
 // let maxHeight = 556971
 
 const writelen = 1E4
-const startPage = 26
-let maxHeight = 561789
+const startPage = 0
+let maxHeight = 56178900
 
 for (let i = 0; i < csvList.length - 1; i++) {
   const row = csvList[i]
