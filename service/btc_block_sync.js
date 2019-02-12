@@ -58,16 +58,19 @@ wsClient.onend = function () {
   clearInterval(_interval)
 }
 wsClient.open(uri)
-
+// 记录上一个blocktime, 因为有可能出现重复值，这样写入数据库的时候可能被覆盖
+let lastBlockTime = 0
 function handRecieveBlock(json) {
   try {
     const { x } = json
     const { time, hash, height, nTx, totalBTCSent, mrklRoot } = x
+    const timeToWrite = time <= lastBlockTime ? (lastBlockTime + 1) : time
     db_client.writePoints([{
       measurement: 'btc_block',
       fields: { time, hash, height, nTx, totalBTCSent, mrklRoot },
-      timestamp: new Date(time * 1000) * 1E6
+      timestamp: new Date(timeToWrite * 1000) * 1E6
     }])
+    lastBlockTime = timeToWrite
   } catch (e) {
     console.log('write data error', e)
   }
