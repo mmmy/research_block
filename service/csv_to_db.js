@@ -26,6 +26,7 @@ let dataPoints = []
 const writelen = 1E4
 const startPage = 0
 let maxHeight = 562551
+let preTime = 0
 
 for (let i = 0; i < csvList.length - 1; i++) {
   const row = csvList[i]
@@ -38,11 +39,12 @@ for (let i = 0; i < csvList.length - 1; i++) {
     dataPoints.push({
       measurement: 'btc_block',
       fields: { time, hash, height },
-      timestamp: new Date(time * 1000) * 1E6
+      timestamp: new Date((time <= preTime ? (preTime + 1) : time) * 1000) * 1E6
     })
+    // 因为有时间相同的区块
+    preTime = time <= preTime ? (preTime + 1) : time
   }
 }
-
 console.log('write total len', dataPoints.length)
 
 function delayWrite() {
