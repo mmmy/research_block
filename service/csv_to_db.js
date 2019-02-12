@@ -34,8 +34,8 @@ for (let i = 0; i < csvList.length - 1; i++) {
   const height = +splits[0]
   const time = +splits[1]
   const hash = splits[2]
-  // if (height <= maxHeight && height >= writelen * startPage) {
-  if (height <= maxHeight && height >= 0) {
+  if (height <= maxHeight && height >= writelen * startPage) {
+  // if (height <= maxHeight && height >= 0) {
     dataPoints.push({
       measurement: 'btc_block',
       fields: { time, hash, height },
