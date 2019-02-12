@@ -25,7 +25,7 @@ let dataPoints = []
 
 const writelen = 1E4
 const startPage = 0
-let maxHeight = 56178900
+let maxHeight = 562551
 
 for (let i = 0; i < csvList.length - 1; i++) {
   const row = csvList[i]
@@ -33,7 +33,8 @@ for (let i = 0; i < csvList.length - 1; i++) {
   const height = +splits[0]
   const time = +splits[1]
   const hash = splits[2]
-  if (height <= maxHeight && height >= writelen * startPage) {
+  // if (height <= maxHeight && height >= writelen * startPage) {
+  if (height <= maxHeight && height > 561881) {
     dataPoints.push({
       measurement: 'btc_block',
       fields: { time, hash, height },
